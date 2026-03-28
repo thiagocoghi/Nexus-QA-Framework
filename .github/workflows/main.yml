@@ -9,7 +9,8 @@ on:
 jobs:
   test:
     name: Run Automated Tests
-    runs-on: ubuntu-latest
+    # MUDANÇA AQUI: Travando na versão estável 22.04
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout Code
@@ -22,7 +23,7 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      # Este passo instala os browsers E as bibliotecas do Linux (Sudo)
+      # Agora o comando vai encontrar todos os pacotes corretamente
       - name: Install Playwright Browsers and Deps
         run: mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install --with-deps"
 
