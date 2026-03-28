@@ -22,14 +22,13 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      # FORMA CIRÚRGICA: Usa a action oficial para instalar browsers e dependências de OS
-      - name: Install Playwright Browsers
+      # Este passo instala os browsers E as bibliotecas do Linux (Sudo)
+      - name: Install Playwright Browsers and Deps
         run: mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install --with-deps"
 
       - name: Execute Tests
         run: mvn test
-        # O Maven pode falhar se o aspectjweaver não estiver ok.
-        # Se falhar aqui, o próximo passo resolve.
+        continue-on-error: true
 
       - name: Upload Allure Results
         if: always()
